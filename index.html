@@ -90,12 +90,23 @@
         // Function to add key, title, and text to localStorage
         function addData() {
             var key = document.getElementById("keyInput").value;
-            var title = document.getElementById("titleInput").value;
+            var title = document.getElementById("titleInput").value.toLowerCase(); // Store title in lowercase
             var text = document.getElementById("textInput").value;
 
             if (key.trim() !== "" && title.trim() !== "" && text.trim() !== "") {
                 let data = JSON.parse(localStorage.getItem("storedData")) || [];
-                data.push({ key: key, title: title, text: text });
+
+                // Check if the title already exists
+                const existingEntry = data.find(item => item.title === title && item.key === key);
+
+                if (existingEntry) {
+                    // Append new text to existing text
+                    existingEntry.text += " " + text; // Append text with a space for separation
+                } else {
+                    // If title does not exist, add a new entry
+                    data.push({ key: key, title: title, text: text });
+                }
+
                 localStorage.setItem("storedData", JSON.stringify(data));
                 document.getElementById("keyInput").value = "";
                 document.getElementById("titleInput").value = "";
