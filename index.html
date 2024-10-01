@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: white;
+            padding: 30px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            width: 400px;
+            text-align: center;
+            margin: 20px;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        input[type="text"] {
+            width: 80%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        button {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+            button:hover {
+                background-color: #218838;
+            }
+
+        #results {
+            margin-top: 20px;
+            font-size: 16px;
+            color: #555;
+            word-wrap: break-word;
+        }
+
+        .no-result {
+            color: red;
+        }
+
+        .box {
+            margin-top: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            padding: 20px;
+            background-color: #fff;
+        }
+
+            .box h2 {
+                margin-bottom: 20px;
+                color: #333;
+            }
+    </style>
+
+    <script>
+        function clearLocalStorage() {
+            if (confirm("Are you sure you want to clear local storage? This action cannot be undone.")) {
+                if (confirm("You will lose all the records")) {
+                    localStorage.clear();
+                    alert("Local storage cleared!");
+                }
+            }
+        }
+        // Function to add key, title, and text to localStorage
+        function addData() {
+            var key = document.getElementById("keyInput").value;
+            var title = document.getElementById("titleInput").value;
+            var text = document.getElementById("textInput").value;
+
+            if (key.trim() !== "" && title.trim() !== "" && text.trim() !== "") {
+                let data = JSON.parse(localStorage.getItem("storedData")) || [];
+                data.push({ key: key, title: title, text: text });
+                localStorage.setItem("storedData", JSON.stringify(data));
+                document.getElementById("keyInput").value = "";
+                document.getElementById("titleInput").value = "";
+                document.getElementById("textInput").value = ""; // Clear inputs after storing
+                alert("Key, title, and text added successfully!");
+            } else {
+                alert("Please enter key, title, and text.");
+            }
+        }
+
+        // Function to search by key in localStorage
+        function searchData() {
+            var searchKey = document.getElementById("searchKeyInput").value.toLowerCase();
+            let data = JSON.parse(localStorage.getItem("storedData")) || [];
+
+            var result = data.filter(item => {
+                // Ensure key exists before calling toLowerCase
+                let key = item.key ? item.key.toLowerCase() : '';
+                return key.includes(searchKey);
+            });
+
+            if (result.length > 0) {
+                var resultHTML = result.map(item =>
+                    "<strong>Key:</strong> " + (item.key || "No Key") +
+                    "<br><strong>Title:</strong> " + (item.title || "No Title") +
+                    "<br><strong>Text:</strong> " + (item.text || "No Text") +
+                    "<br><br>"
+                ).join("");
+                document.getElementById("results").innerHTML = resultHTML;
+            } else {
+                document.getElementById("results").innerHTML = "<span class='no-result'>No matches found.</span>";
+            }
+        }
+        function searchByTitle() {
+            var searchText = document.getElementById("searchKeyInput").value.toLowerCase();  // Use same input field
+            let data = JSON.parse(localStorage.getItem("storedData")) || [];
+
+            var result = data.filter(item => {
+                // Ensure title exists before calling toLowerCase
+                let title = item.title ? item.title.toLowerCase() : '';
+                return title.includes(searchText);
+            });
+
+            if (result.length > 0) {
+                var resultHTML = result.map(item =>
+                    "<strong>Key:</strong> " + (item.key || "No Key") +
+                    "<br><strong>Title:</strong> " + (item.title || "No Title") +
+                    "<br><strong>Text:</strong> " + (item.text || "No Text") +
+                    "<br><br>"
+                ).join("");
+                document.getElementById("results").innerHTML = resultHTML;
+            } else {
+                document.getElementById("results").innerHTML = "<span class='no-result'>No matches found.</span>";
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+
+        <!-- Add Section -->
+        <div class="box">
+            <h2>Insert Data</h2>
+            <input type="text" id="keyInput" placeholder="Enter key"><br>
+            <input type="text" id="titleInput" placeholder="Enter title"><br>
+            <input type="text" id="textInput" placeholder="Enter text"><br>
+            <button onclick="addData()">Add</button>
+            <button onclick="clearLocalStorage()">Clear</button>
+        </div>
+
+        <!-- Search Section -->
+        <div class="box">
+            <h2>Search</h2>
+            <input type="text" id="searchKeyInput" placeholder="Search by key"><br>
+            <button onclick="searchData()">Subject</button>
+            <button onclick="searchByTitle()">Search by Title</button>
+        </div>
+
+        <!-- Area to display search results -->
+        <div id="results"></div>
+    </div>
+</body>
+</html>
