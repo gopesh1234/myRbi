@@ -1,192 +1,892 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>SSC Mock Tracker</title>
+
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f9;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
 
-        .container {
-            background-color: white;
-            padding: 30px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            border-radius: 10px;
-            width: 400px;
-            text-align: center;
-            margin: 20px;
-        }
-
-        h1 {
-            color: #333;
-            margin-bottom: 20px;
-        }
-
-        input[type="text"] {
-            width: 80%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            margin-bottom: 10px;
-            font-size: 16px;
-        }
-
-        button {
-            background-color: #28a745;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-
-            button:hover {
-                background-color: #218838;
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                font-family: 'Segoe UI',sans-serif;
             }
 
-        #results {
-            margin-top: 20px;
-            font-size: 16px;
-            color: #555;
-            word-wrap: break-word;
-        }
-
-        .no-result {
-            color: red;
-        }
-
-        .box {
-            margin-top: 20px;
-            border: 1px solid #ccc;
-            border-radius: 10px;
-            padding: 20px;
-            background-color: #fff;
-        }
-
-            .box h2 {
-                margin-bottom: 20px;
-                color: #333;
+            body {
+                background: linear-gradient(135deg,#667eea,#764ba2);
+                min-height: 100vh;
+                padding: 15px;
             }
+
+            .tabs {
+                display: flex;
+                gap: 8px;
+                position: sticky;
+                top: 10px;
+                z-index: 100;
+                margin-bottom: 15px;
+            }
+
+            .tab-btn {
+                flex: 1;
+                border: none;
+                padding: 12px;
+                border-radius: 15px;
+                font-weight: 700;
+                color: white;
+                background: rgba(255,255,255,.15);
+                backdrop-filter: blur(10px);
+                cursor: pointer;
+            }
+
+                .tab-btn.active {
+                    background: white;
+                    color: #5a4fd6;
+                }
+
+            .section {
+                display: none;
+            }
+
+                .section.active {
+                    display: block;
+                }
+
+            .dashboard {
+                background: white;
+                border-radius: 20px;
+                padding: 18px;
+                margin-bottom: 15px;
+                box-shadow: 0 10px 30px rgba(0,0,0,.15);
+            }
+
+                .dashboard h2 {
+                    color: #5a4fd6;
+                    margin-bottom: 15px;
+                }
+
+            .dashboard-grid {
+                display: grid;
+                grid-template-columns: repeat(2,1fr);
+                gap: 10px;
+            }
+
+            .dashboard-box {
+                background: #f4f4ff;
+                padding: 12px;
+                border-radius: 12px;
+                text-align: center;
+            }
+
+                .dashboard-box span {
+                    display: block;
+                    font-size: 12px;
+                    color: #666;
+                }
+
+                .dashboard-box strong {
+                    font-size: 18px;
+                    color: #5a4fd6;
+                }
+
+            .summary-card {
+                background: white;
+                border-radius: 20px;
+                padding: 15px;
+                margin-bottom: 15px;
+            }
+
+                .summary-card h3 {
+                    color: #5a4fd6;
+                    margin-bottom: 10px;
+                }
+
+            .add-btn {
+                width: 100%;
+                border: none;
+                padding: 14px;
+                border-radius: 15px;
+                background: #00c853;
+                color: white;
+                font-size: 16px;
+                font-weight: 700;
+                margin-bottom: 15px;
+                cursor: pointer;
+            }
+
+            .card {
+                background: rgba(255,255,255,.15);
+                backdrop-filter: blur(15px);
+                border-radius: 20px;
+                padding: 18px;
+                margin-bottom: 15px;
+                border: 1px solid rgba(255,255,255,.2);
+                color: white;
+            }
+
+            .mock-title {
+                font-size: 18px;
+                font-weight: 700;
+                margin-bottom: 15px;
+            }
+
+            .grid {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 10px;
+            }
+
+            label {
+                display: block;
+                margin-bottom: 5px;
+                font-size: 13px;
+            }
+
+            input {
+                width: 100%;
+                padding: 10px;
+                border: none;
+                border-radius: 10px;
+            }
+
+            .stats {
+                margin-top: 15px;
+                display: grid;
+                grid-template-columns: repeat(4,1fr);
+                gap: 8px;
+            }
+
+            .stat {
+                background: rgba(255,255,255,.15);
+                padding: 10px;
+                border-radius: 10px;
+                text-align: center;
+            }
+
+                .stat span {
+                    display: block;
+                    font-size: 12px;
+                }
+
+                .stat strong {
+                    font-size: 16px;
+                }
+
+            .btn-row {
+                display: flex;
+                gap: 10px;
+                margin-top: 15px;
+            }
+
+            .lock-btn {
+                flex: 1;
+                border: none;
+                padding: 10px;
+                border-radius: 10px;
+                background: #ff9800;
+                color: white;
+                font-weight: bold;
+                cursor: pointer;
+            }
+
+            .delete-btn {
+                flex: 1;
+                border: none;
+                padding: 10px;
+                border-radius: 10px;
+                background: #e53935;
+                color: white;
+                font-weight: bold;
+                cursor: pointer;
+            }
+
+            .reset-btn {
+                width: 100%;
+                margin-top: 10px;
+                border: none;
+                padding: 12px;
+                border-radius: 12px;
+                background: #e53935;
+                color: white;
+                font-weight: bold;
+                cursor: pointer;
+            }
+
     </style>
+</head>
+
+<body>
+
+    <div class="dashboard">
+
+        <h2>Mock Comparison (200 Marks)</h2>
+
+        <select id="mockSelector"
+                onchange="updateMockComparison()"
+                style="
+            width:100%;
+            padding:12px;
+            border-radius:12px;
+            margin-bottom:15px;
+            border:1px solid #ddd;">
+        </select>
+
+        <div class="dashboard-grid">
+
+            <div class="dashboard-box">
+                <span>Maths</span>
+                <strong id="cmpMaths">0</strong>
+            </div>
+
+            <div class="dashboard-box">
+                <span>Reasoning</span>
+                <strong id="cmpReasoning">0</strong>
+            </div>
+
+            <div class="dashboard-box">
+                <span>English</span>
+                <strong id="cmpEnglish">0</strong>
+            </div>
+
+            <div class="dashboard-box">
+                <span>GS</span>
+                <strong id="cmpGS">0</strong>
+            </div>
+
+            <div class="dashboard-box">
+                <span>Total / 200</span>
+                <strong id="cmpTotal">0</strong>
+            </div>
+
+            <div class="dashboard-box">
+                <span>Accuracy</span>
+                <strong id="cmpAccuracy">0%</strong>
+            </div>
+
+        </div>
+
+    </div>
+    <div class="tabs">
+        <button class="reset-btn" onclick="resetData()">
+            Reset All Data
+        </button>
+
+    </div>
+
+    <div class="tabs">
+
+        <button class="tab-btn active" onclick="showSection('maths',this)">
+            Maths
+        </button>
+
+        <button class="tab-btn" onclick="showSection('reasoning',this)">
+            Reasoning
+        </button>
+
+        <button class="tab-btn" onclick="showSection('english',this)">
+            English
+        </button>
+
+        <button class="tab-btn" onclick="showSection('gs',this)">
+            GS
+        </button>
+
+    </div>
+
+    <div id="maths" class="section active"></div>
+    <div id="reasoning" class="section"></div>
+    <div id="english" class="section"></div>
+    <div id="gs" class="section"></div>
 
     <script>
-        function clearLocalStorage() {
-            if (confirm("Are you sure you want to clear local storage? This action cannot be undone.")) {
-                if (confirm("You will lose all the records")) {
-                    localStorage.clear();
-                    alert("Local storage cleared!");
-                }
-            }
-        }
-        // Function to add key, title, and text to localStorage
-        function addData() {
-            var key = document.getElementById("keyInput").value;
-            var title = document.getElementById("titleInput").value.toLowerCase(); // Store title in lowercase
-            var text = document.getElementById("textInput").value;
 
-            if (key.trim() !== "" && title.trim() !== "" && text.trim() !== "") {
-                let data = JSON.parse(localStorage.getItem("storedData")) || [];
+            const sections = ["maths","reasoning","english","gs"];
 
-                // Check if the title already exists
-                const existingEntry = data.find(item => item.title === title && item.key === key);
+            sections.forEach(sec=>{
 
-                if (existingEntry) {
-                    // Append new text to existing text
-                    existingEntry.text += " " + text; // Append text with a space for separation
-                } else {
-                    // If title does not exist, add a new entry
-                    data.push({ key: key, title: title, text: text });
-                }
+            document.getElementById(sec).innerHTML=`
 
-                localStorage.setItem("storedData", JSON.stringify(data));
-                document.getElementById("keyInput").value = "";
-                document.getElementById("titleInput").value = "";
-                document.getElementById("textInput").value = ""; // Clear inputs after storing
-                alert("Key, title, and text added successfully!");
-            } else {
-                alert("Please enter key, title, and text.");
-            }
-        }
+            <div class="summary-card">
 
-        // Function to search by key in localStorage
-        function searchData() {
-            var searchKey = document.getElementById("searchKeyInput").value.toLowerCase();
-            let data = JSON.parse(localStorage.getItem("storedData")) || [];
+            <h3>${sec.toUpperCase()} Average</h3>
 
-            var result = data.filter(item => {
-                // Ensure key exists before calling toLowerCase
-                let key = item.key ? item.key.toLowerCase() : '';
-                return key.includes(searchKey);
+            <div>
+            Mocks :
+            <span class="avgMocks">0</span>
+            </div>
+
+            <div>
+            Avg Score :
+            <span class="avgScore">0</span>
+            </div>
+
+            <div>
+            Accuracy :
+            <span class="avgAccuracy">0%</span>
+            </div>
+
+            </div>
+
+            <button class="add-btn"
+            onclick="addMock('${sec}')">
+
+            + Add Mock
+
+            </button>
+
+            <div id="${sec}Container"></div>
+
+            `;
+
             });
 
-            if (result.length > 0) {
-                var resultHTML = result.map(item =>
-                    "<strong>Key:</strong> " + (item.key || "No Key") +
-                    "<br><strong>Title:</strong> " + (item.title || "No Title") +
-                    "<br><strong>Text:</strong> " + (item.text || "No Text") +
-                    "<br><br>"
-                ).join("");
-                document.getElementById("results").innerHTML = resultHTML;
-            } else {
-                document.getElementById("results").innerHTML = "<span class='no-result'>No matches found.</span>";
-            }
-        }
-        function searchByTitle() {
-            var searchText = document.getElementById("searchKeyInput").value.toLowerCase();  // Use same input field
-            let data = JSON.parse(localStorage.getItem("storedData")) || [];
+            function showSection(id,btn){
 
-            var result = data.filter(item => {
-                // Ensure title exists before calling toLowerCase
-                let title = item.title ? item.title.toLowerCase() : '';
-                return title.includes(searchText);
+            document.querySelectorAll('.section')
+            .forEach(x=>x.classList.remove('active'));
+
+            document.querySelectorAll('.tab-btn')
+            .forEach(x=>x.classList.remove('active'));
+
+            document.getElementById(id)
+            .classList.add('active');
+
+            btn.classList.add('active');
+
+            }
+
+            function addMock(section,data=null){
+
+            const container=
+            document.getElementById(section+'Container');
+
+            const card=
+            document.createElement('div');
+
+            card.className='card';
+
+            card.innerHTML=`
+
+            <div class="mock-title">
+            Mock
+            </div>
+
+            <div class="grid">
+
+            <div>
+            <label>Total Questions</label>
+            <input class="total"
+            type="number"
+            value="${data?.total || ''}">
+            </div>
+
+            <div>
+            <label>Attempted</label>
+            <input class="attempted"
+            type="number"
+            value="${data?.attempted || ''}">
+            </div>
+
+            <div>
+            <label>Correct</label>
+            <input class="correct"
+            type="number"
+            value="${data?.correct || ''}">
+            </div>
+
+            </div>
+
+            <div class="stats">
+
+            <div class="stat">
+            <span>Wrong</span>
+            <strong class="wrong">0</strong>
+            </div>
+
+            <div class="stat">
+            <span>Unattempted</span>
+            <strong class="unattempted">0</strong>
+            </div>
+
+            <div class="stat">
+            <span>Score</span>
+            <strong class="score">0</strong>
+            </div>
+
+            <div class="stat">
+            <span>Accuracy</span>
+            <strong class="accuracy">0%</strong>
+            </div>
+
+            </div>
+
+            <div class="btn-row">
+
+            <button class="lock-btn"
+            onclick="toggleLock(this)">
+            🔒 Lock
+            </button>
+
+            <button class="delete-btn"
+            onclick="deleteMock(this)">
+            Delete
+            </button>
+
+            </div>
+
+            `;
+
+            container.prepend(card);
+
+            card.querySelectorAll("input")
+            .forEach(i=>{
+
+            i.addEventListener("input",()=>{
+
+            calculate(card);
+            saveData();
+            refreshAll();
+
             });
 
-            if (result.length > 0) {
-                var resultHTML = result.map(item =>
-                    "<strong>Key:</strong> " + (item.key || "No Key") +
-                    "<br><strong>Title:</strong> " + (item.title || "No Title") +
-                    "<br><strong>Text:</strong> " + (item.text || "No Text") +
-                    "<br><br>"
-                ).join("");
-                document.getElementById("results").innerHTML = resultHTML;
-            } else {
-                document.getElementById("results").innerHTML = "<span class='no-result'>No matches found.</span>";
+            });
+
+            calculate(card);
+
+            renumber(container);
+
+            saveData();
+
+            refreshAll();
+
             }
-        }
+
+            function calculate(card){
+
+            let total=
+            parseInt(card.querySelector(".total").value)||0;
+
+            let attempted=
+            parseInt(card.querySelector(".attempted").value)||0;
+
+            let correct=
+            parseInt(card.querySelector(".correct").value)||0;
+
+            let wrong=
+            attempted-correct;
+
+            if(wrong<0)
+            wrong=0;
+
+            let unattempted=
+            total-attempted;
+
+            let score=
+            (correct*2) - (wrong*0.5);
+
+            let accuracy=
+            attempted>0
+            ?((correct/attempted)*100).toFixed(2)
+            :0;
+
+            card.querySelector(".wrong").innerText=wrong;
+            card.querySelector(".unattempted").innerText=unattempted;
+            card.querySelector(".score").innerText=score.toFixed(2);
+            card.querySelector(".accuracy").innerText=accuracy+"%";
+
+            }
+
+            function toggleLock(btn){
+
+            let card=
+            btn.closest(".card");
+
+            let inputs=
+            card.querySelectorAll("input");
+
+            let locked=
+            btn.dataset.locked==="true";
+
+            inputs.forEach(i=>{
+
+            i.disabled=!locked;
+
+            });
+
+            btn.dataset.locked=!locked;
+
+            btn.innerText=
+            locked
+            ?"🔒 Lock"
+            :"🔓 Unlock";
+
+            saveData();
+
+            }
+
+            function deleteMock(btn){
+
+            let container=
+            btn.closest('[id$="Container"]');
+
+            btn.closest(".card").remove();
+
+            renumber(container);
+
+            saveData();
+
+            refreshAll();
+
+            }
+
+            function renumber(container){
+
+            let cards=
+            container.querySelectorAll(".card");
+
+            cards.forEach((card,index)=>{
+
+            card.querySelector(".mock-title")
+            .innerText=
+            "Mock " +
+            (cards.length-index);
+
+            });
+
+            }
+
+            function refreshAll(){
+
+            let totalMocks=0;
+            let totalScore=0;
+            let bestScore=0;
+
+            let totalCorrect=0;
+            let totalAttempted=0;
+
+            sections.forEach(sec=>{
+
+            let container=
+            document.getElementById(sec+'Container');
+
+            let cards=
+            container.querySelectorAll('.card');
+
+            let sectionScore=0;
+
+            cards.forEach(card=>{
+
+            totalMocks++;
+
+            let score=
+            parseFloat(
+            card.querySelector('.score').innerText
+            )||0;
+
+            sectionScore+=score;
+
+            totalScore+=score;
+
+            if(score>bestScore)
+            bestScore=score;
+
+            totalCorrect+=
+            parseInt(
+            card.querySelector('.correct').value
+            )||0;
+
+            totalAttempted+=
+            parseInt(
+            card.querySelector('.attempted').value
+            )||0;
+
+            });
+
+            let avgScore=
+            cards.length
+            ?(sectionScore/cards.length).toFixed(2)
+            :0;
+
+            let acc=
+            0;
+
+            cards.forEach(card=>{
+
+            acc+=parseFloat(
+            card.querySelector('.accuracy')
+            .innerText
+            )||0;
+
+            });
+
+            acc=
+            cards.length
+            ?(acc/cards.length).toFixed(2)
+            :0;
+
+            let summary=
+            document
+            .getElementById(sec)
+            .querySelector('.summary-card');
+
+            summary.querySelector('.avgMocks')
+            .innerText=cards.length;
+
+            summary.querySelector('.avgScore')
+            .innerText=avgScore;
+
+            summary.querySelector('.avgAccuracy')
+            .innerText=acc+'%';
+
+            });
+
+            let overallAccuracy=
+            totalAttempted
+            ?((totalCorrect/totalAttempted)*100).toFixed(2)
+            :0;
+
+                        const totalMocksEl =
+            document.getElementById("totalMocks");
+
+            const totalScoreEl =
+            document.getElementById("totalScore");
+
+            const bestScoreEl =
+            document.getElementById("bestScore");
+
+            const overallAccuracyEl =
+            document.getElementById("overallAccuracy");
+
+            if(totalMocksEl)
+            totalMocksEl.innerText=totalMocks;
+
+            if(totalScoreEl)
+            totalScoreEl.innerText=
+            totalScore.toFixed(2);
+
+            if(bestScoreEl)
+            bestScoreEl.innerText=
+            bestScore.toFixed(2);
+
+            if(overallAccuracyEl)
+            overallAccuracyEl.innerText=
+            overallAccuracy+"%";
+
+                        fillMockDropdown();
+            updateMockComparison();
+
+            }
+
+            function saveData(){
+
+            let data={};
+
+            sections.forEach(sec=>{
+
+            data[sec]=[];
+
+            document
+            .querySelectorAll('#'+sec+'Container .card')
+            .forEach(card=>{
+
+            data[sec].push({
+
+            total:
+            card.querySelector('.total').value,
+
+            attempted:
+            card.querySelector('.attempted').value,
+
+            correct:
+            card.querySelector('.correct').value
+
+            });
+
+            });
+
+            });
+
+            localStorage.setItem(
+            "sscMockTracker",
+            JSON.stringify(data)
+            );
+
+            }
+
+                                    function fillMockDropdown(){
+
+                const ddl =
+                document.getElementById('mockSelector');
+
+                if(!ddl) return;
+
+                let maxMocks = 0;
+
+                sections.forEach(sec=>{
+
+                    const count =
+                    document.querySelectorAll(
+                    '#' + sec + 'Container .card'
+                    ).length;
+
+                    maxMocks = Math.max(maxMocks,count);
+
+                });
+
+                const currentValue = ddl.value;
+
+                ddl.innerHTML = '';
+
+                for(let i=maxMocks;i>=1;i--){
+
+                    ddl.innerHTML += `
+                        <option value="${i}">
+                            Mock ${i}
+                        </option>
+                    `;
+                }
+
+                if(currentValue &&
+                   ddl.querySelector(`option[value="${currentValue}"]`)){
+
+                    ddl.value = currentValue;
+                }
+
+                else if(maxMocks>0){
+
+                    ddl.value=maxMocks;
+                }
+            }
+
+                        function updateMockComparison(){
+
+                const ddl =
+                document.getElementById('mockSelector');
+
+                if(!ddl || !ddl.value) return;
+
+                const mockNo =
+                parseInt(ddl.value);
+
+                let maths=0;
+                let reasoning=0;
+                let english=0;
+                let gs=0;
+
+                let totalCorrect=0;
+                let totalAttempted=0;
+
+                sections.forEach(sec=>{
+
+                    const cards =
+                    [...document.querySelectorAll(
+                    '#' + sec + 'Container .card'
+                    )];
+
+                    const card =
+                    cards.find(c=>
+                        c.querySelector('.mock-title')
+                        .innerText.trim() === `Mock ${mockNo}`
+                    );
+
+                    if(!card) return;
+
+                    const score =
+                    parseFloat(
+                    card.querySelector('.score').innerText
+                    ) || 0;
+
+                    const correct =
+                    parseInt(
+                    card.querySelector('.correct').value
+                    ) || 0;
+
+                    const attempted =
+                    parseInt(
+                    card.querySelector('.attempted').value
+                    ) || 0;
+
+                    totalCorrect += correct;
+                    totalAttempted += attempted;
+
+                    if(sec==="maths") maths=score;
+                    if(sec==="reasoning") reasoning=score;
+                    if(sec==="english") english=score;
+                    if(sec==="gs") gs=score;
+
+                });
+
+                document.getElementById("cmpMaths").innerText =
+                maths.toFixed(2);
+
+                document.getElementById("cmpReasoning").innerText =
+                reasoning.toFixed(2);
+
+                document.getElementById("cmpEnglish").innerText =
+                english.toFixed(2);
+
+                document.getElementById("cmpGS").innerText =
+                gs.toFixed(2);
+
+                const total =
+                maths + reasoning + english + gs;
+
+                document.getElementById("cmpTotal").innerText =
+                total.toFixed(2) + " / 200";
+
+                const accuracy =
+                totalAttempted
+                ? ((totalCorrect/totalAttempted)*100).toFixed(2)
+                : 0;
+
+                document.getElementById("cmpAccuracy").innerText =
+                accuracy + "%";
+            }
+
+            function loadData(){
+
+            let data=
+            JSON.parse(
+            localStorage.getItem(
+            "sscMockTracker"
+            )||"{}");
+
+            sections.forEach(sec=>{
+
+            (data[sec]||[])
+            .reverse()
+            .forEach(mock=>{
+
+            addMock(sec,mock);
+
+            });
+
+            });
+
+            fillMockDropdown();
+
+            }
+
+            function resetData(){
+
+            if(confirm("Delete all data?")){
+
+            localStorage.removeItem(
+            "sscMockTracker"
+            );
+
+            location.reload();
+
+            }
+
+            }
+
+            loadData();
+
     </script>
-</head>
-<body>
-    <div class="container">
 
-        <!-- Add Section -->
-        <div class="box">
-            <h2>Insert Data</h2>
-            <input type="text" id="keyInput" placeholder="Enter key"><br>
-            <input type="text" id="titleInput" placeholder="Enter title"><br>
-            <input type="text" id="textInput" placeholder="Enter text"><br>
-            <button onclick="addData()">Add</button>
-            <button onclick="clearLocalStorage()">Clear</button>
-        </div>
-
-        <!-- Search Section -->
-        <div class="box">
-            <h2>Search</h2>
-            <input type="text" id="searchKeyInput" placeholder="Search by key"><br>
-            <button onclick="searchData()">Subject</button>
-            <button onclick="searchByTitle()">Search by Title</button>
-        </div>
-
-        <!-- Area to display search results -->
-        <div id="results"></div>
-    </div>
 </body>
 </html>
