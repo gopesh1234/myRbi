@@ -1,8 +1,12 @@
+@{
+    Layout = null;
+}
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
     <title>SSC Mock Tracker</title>
 
@@ -270,6 +274,11 @@
     <div class="tabs">
         <button class="reset-btn" onclick="resetData()">
             Reset All Data
+        </button>
+        <button class="add-btn"
+                style="margin-top:10px;"
+                onclick="downloadPDF()">
+            📄 Download PDF Report
         </button>
 
     </div>
@@ -833,6 +842,446 @@
                 document.getElementById("cmpAccuracy").innerText =
                 accuracy + "%";
             }
+
+        async function downloadPDF(){
+
+        const { jsPDF } = window.jspdf;
+
+        const doc = new jsPDF();
+
+        drawHeader(
+        doc,
+        "SSC MOCK TRACKER REPORT"
+        );
+
+        let y = 25;
+
+        sections.forEach(sec=>{
+
+        const cards =
+        document.querySelectorAll(
+        '#' + sec + 'Container .card'
+        );
+
+        if(cards.length===0)
+        return;
+
+        if(y>220){
+
+        doc.addPage();
+
+        drawHeader(
+        doc,
+        "SSC MOCK TRACKER REPORT"
+        );
+
+        y=25;
+        }
+
+        doc.setFontSize(14);
+
+        doc.text(
+        sec.toUpperCase(),
+        14,
+        y
+        );
+
+        y += 8;
+
+        const rows = [];
+
+        cards.forEach(card=>{
+
+        rows.push([
+
+        card.querySelector('.mock-title')
+        .innerText,
+
+        card.querySelector('.total')
+        .value || 0,
+
+        card.querySelector('.attempted')
+        .value || 0,
+
+        card.querySelector('.correct')
+        .value || 0,
+
+        card.querySelector('.wrong')
+        .innerText || 0,
+
+        card.querySelector('.score')
+        .innerText || 0,
+
+        card.querySelector('.accuracy')
+        .innerText || 0
+
+        ]);
+
+        });
+
+        y = drawTable(
+        doc,
+        14,
+        y,
+        [
+        "Mock",
+        "Total",
+        "Att",
+        "Correct",
+        "Wrong",
+        "Score",
+        "Accuracy"
+        ],
+        rows
+        );
+
+        y += 10;
+
+        });
+
+        // OVERALL SUMMARY
+
+        doc.addPage();
+
+        drawHeader(
+        doc,
+        "OVERALL SUMMARY"
+        );
+
+        y = 30;
+
+        const summaryRows = [];
+
+        sections.forEach(sec=>{
+
+        const cards =
+        document.querySelectorAll(
+        '#' + sec + 'Container .card'
+        );
+
+        let totalScore=0;
+        let totalCorrect=0;
+        let totalAttempted=0;
+
+        cards.forEach(card=>{
+
+        totalScore +=
+        parseFloat(
+        card.querySelector('.score')
+        .innerText
+        ) || 0;
+
+        totalCorrect +=
+        parseInt(
+        card.querySelector('.correct')
+        .value
+        ) || 0;
+
+        totalAttempted +=
+        parseInt(
+        card.querySelector('.attempted')
+        .value
+        ) || 0;
+        });
+
+        const avgScore =
+        cards.length
+        ? (totalScore/cards.length)
+        .toFixed(2)
+        : 0;
+
+        const accuracy =
+        totalAttempted
+        ? (
+        (totalCorrect/totalAttempted)
+        *100
+        ).toFixed(2)
+        : 0;
+
+        summaryRows.push([
+        sec.toUpperCase(),
+        cards.length,
+        avgScore,
+        accuracy + "%"
+        ]);
+        });
+
+        drawTable(
+        doc,
+        14,
+        y,
+        [
+        "Section",
+        "Mocks",
+        "Avg Score",
+        "Accuracy"
+        ],
+        summaryRows
+        );
+
+        // MOCK COMPARISON
+
+        doc.addPage();
+
+        drawHeader(
+        doc,
+        "MOCK WISE COMPARISON"
+        );
+
+        y = 30;
+
+        let rows = [];
+
+        let maxMocks = 0;
+
+        sections.forEach(sec=>{
+
+        maxMocks = Math.max(
+        maxMocks,
+        document.querySelectorAll(
+        '#' + sec + 'Container .card'
+        ).length
+        );
+
+        });
+
+        for(let mock=maxMocks;mock>=1;mock--){
+
+        let maths=0;
+        let reasoning=0;
+        let english=0;
+        let gs=0;
+
+        let totalCorrect=0;
+        let totalAttempted=0;
+
+        sections.forEach(sec=>{
+
+        const cards =
+        [...document.querySelectorAll(
+        '#' + sec + 'Container .card'
+        )];
+
+        const card =
+        cards.find(c=>
+
+        c.querySelector('.mock-title')
+        .innerText.trim()
+        ===
+        `Mock ${mock}`
+        );
+
+        if(!card)
+        return;
+
+        const score =
+        parseFloat(
+        card.querySelector('.score')
+        .innerText
+        ) || 0;
+
+        totalCorrect +=
+        parseInt(
+        card.querySelector('.correct')
+        .value
+        ) || 0;
+
+        totalAttempted +=
+        parseInt(
+        card.querySelector('.attempted')
+        .value
+        ) || 0;
+
+        if(sec==="maths")
+        maths=score;
+
+        if(sec==="reasoning")
+        reasoning=score;
+
+        if(sec==="english")
+        english=score;
+
+        if(sec==="gs")
+        gs=score;
+        });
+
+        const total =
+        maths +
+        reasoning +
+        english +
+        gs;
+
+        const accuracy =
+        totalAttempted
+        ? (
+        (totalCorrect/totalAttempted)
+        *100
+        ).toFixed(2)
+        : 0;
+
+        rows.push([
+
+        mock,
+
+        maths.toFixed(2),
+
+        reasoning.toFixed(2),
+
+        english.toFixed(2),
+
+        gs.toFixed(2),
+
+        total.toFixed(2),
+
+        accuracy + "%"
+
+        ]);
+        }
+
+        drawTable(
+        doc,
+        14,
+        y,
+        [
+        "Mock",
+        "Maths",
+        "Reasoning",
+        "English",
+        "GS",
+        "Total",
+        "Accuracy"
+        ],
+        rows
+        );
+
+        drawFooter(doc);
+
+        doc.save(
+        "SSC_Mock_Tracker_Report.pdf"
+        );
+        }
+        function drawHeader(doc, title){
+
+        doc.setFillColor(90,79,214);
+
+        doc.rect(0,0,210,15,'F');
+
+        doc.setTextColor(255,255,255);
+
+        doc.setFontSize(18);
+
+        doc.text(title,14,10);
+
+        doc.setTextColor(0,0,0);
+        }
+
+        function drawFooter(doc){
+
+        const pageCount =
+        doc.internal.getNumberOfPages();
+
+        for(let i=1;i<=pageCount;i++){
+
+        doc.setPage(i);
+
+        doc.setFontSize(9);
+
+        doc.text(
+        `Page ${i} of ${pageCount}`,
+        170,
+        290
+        );
+
+        doc.text(
+        new Date().toLocaleString(),
+        14,
+        290
+        );
+        }
+        }
+
+        function drawTable(doc,x,y,headers,rows){
+
+        const colWidth =
+        180 / headers.length;
+
+        doc.setFontSize(10);
+
+        doc.setFillColor(240,240,255);
+
+        doc.rect(
+        x,
+        y,
+        180,
+        8,
+        'F'
+        );
+
+        doc.setLineDashPattern([1,1],0);
+
+        doc.rect(
+        x,
+        y,
+        180,
+        8
+        );
+
+        headers.forEach((h,index)=>{
+
+        doc.text(
+        String(h),
+        x + (index*colWidth) + 2,
+        y + 5
+        );
+
+        if(index>0){
+
+        doc.line(
+        x + (index*colWidth),
+        y,
+        x + (index*colWidth),
+        y+8
+        );
+        }
+        });
+
+        let currentY = y + 8;
+
+        rows.forEach(row=>{
+
+        doc.rect(
+        x,
+        currentY,
+        180,
+        8
+        );
+
+        row.forEach((cell,index)=>{
+
+        doc.text(
+        String(cell),
+        x + (index*colWidth) + 2,
+        currentY + 5
+        );
+
+        if(index>0){
+
+        doc.line(
+        x + (index*colWidth),
+        currentY,
+        x + (index*colWidth),
+        currentY+8
+        );
+        }
+        });
+
+        currentY += 8;
+        });
+
+        doc.setLineDashPattern([],0);
+
+        return currentY;
+        }
 
             function loadData(){
 
