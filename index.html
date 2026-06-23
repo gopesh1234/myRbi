@@ -1016,12 +1016,19 @@
 
         headers.forEach((header,index)=>{
 
-        doc.setFillColor(235,235,255);
+        const width =
+        widths[index] || 32;
+
+        doc.setFillColor(
+        235,
+        235,
+        255
+        );
 
         doc.rect(
         runningX,
         currentY,
-        widths[index],
+        width,
         10,
         'F'
         );
@@ -1029,21 +1036,21 @@
         doc.rect(
         runningX,
         currentY,
-        widths[index],
+        width,
         10
         );
 
-        let textWidth =
+        const textWidth =
         doc.getTextWidth(header);
 
         doc.text(
         header,
         runningX +
-        (widths[index]-textWidth)/2,
+        (width-textWidth)/2,
         currentY + 6
         );
 
-        runningX += widths[index];
+        runningX += width;
 
         });
 
@@ -1089,15 +1096,13 @@
         const value =
         String(cell);
 
+        const width =
+        widths[index] || 32;
+
         const currentHeader =
         headers[index];
 
-        doc.rect(
-        runningX,
-        currentY,
-        widths[index],
-        8
-        );
+        // SCORE / AVG SCORE COLORING
 
         if(
         currentHeader === "Score" ||
@@ -1120,16 +1125,9 @@
         doc.rect(
         runningX,
         currentY,
-        widths[index],
+        width,
         8,
         'F'
-        );
-
-        doc.rect(
-        runningX,
-        currentY,
-        widths[index],
-        8
         );
 
         doc.setTextColor(
@@ -1149,16 +1147,9 @@
         doc.rect(
         runningX,
         currentY,
-        widths[index],
+        width,
         8,
         'F'
-        );
-
-        doc.rect(
-        runningX,
-        currentY,
-        widths[index],
-        8
         );
 
         doc.setTextColor(
@@ -1169,6 +1160,72 @@
         }
         }
         }
+
+        // TOTAL COLORING ONLY FOR MOCK WISE COMPARISON
+
+        if(
+        currentHeader === "Total" &&
+        pageTitle === "MOCK WISE COMPARISON"
+        ){
+
+        const total =
+        parseFloat(value);
+
+        if(!isNaN(total)){
+
+        if(total < 130){
+
+        doc.setFillColor(
+        255,
+        220,
+        220
+        );
+
+        doc.rect(
+        runningX,
+        currentY,
+        width,
+        8,
+        'F'
+        );
+
+        doc.setTextColor(
+        220,
+        0,
+        0
+        );
+        }
+        else{
+
+        doc.setFillColor(
+        220,
+        255,
+        220
+        );
+
+        doc.rect(
+        runningX,
+        currentY,
+        width,
+        8,
+        'F'
+        );
+
+        doc.setTextColor(
+        0,
+        140,
+        0
+        );
+        }
+        }
+        }
+
+        doc.rect(
+        runningX,
+        currentY,
+        width,
+        8
+        );
 
         doc.text(
         value,
@@ -1182,8 +1239,7 @@
         0
         );
 
-        runningX +=
-        widths[index];
+        runningX += width;
 
         });
 
@@ -1531,7 +1587,8 @@
         "Total",
         "Accuracy"
         ],
-        comparisonRows
+        comparisonRows,
+        "MOCK WISE COMPARISON"
         );
 
         drawFooter(doc);
