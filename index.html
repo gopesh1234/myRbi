@@ -6,212 +6,212 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <style>
 
-            * {
-                margin: 0;
-                padding: 0;
-                box-sizing: border-box;
-                font-family: 'Segoe UI',sans-serif;
-            }
+        * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Segoe UI',sans-serif;
+        }
 
-            body {
-                background: linear-gradient(135deg,#667eea,#764ba2);
-                min-height: 100vh;
-                padding: 15px;
-            }
+        body {
+        background: linear-gradient(135deg,#667eea,#764ba2);
+        min-height: 100vh;
+        padding: 15px;
+        }
 
-            .tabs {
-                display: flex;
-                gap: 8px;
-                position: sticky;
-                top: 10px;
-                z-index: 100;
-                margin-bottom: 15px;
-            }
+        .tabs {
+        display: flex;
+        gap: 8px;
+        position: sticky;
+        top: 10px;
+        z-index: 100;
+        margin-bottom: 15px;
+        }
 
-            .tab-btn {
-                flex: 1;
-                border: none;
-                padding: 12px;
-                border-radius: 15px;
-                font-weight: 700;
-                color: white;
-                background: rgba(255,255,255,.15);
-                backdrop-filter: blur(10px);
-                cursor: pointer;
-            }
+        .tab-btn {
+        flex: 1;
+        border: none;
+        padding: 12px;
+        border-radius: 15px;
+        font-weight: 700;
+        color: white;
+        background: rgba(255,255,255,.15);
+        backdrop-filter: blur(10px);
+        cursor: pointer;
+        }
 
-                .tab-btn.active {
-                    background: white;
-                    color: #5a4fd6;
-                }
+        .tab-btn.active {
+        background: white;
+        color: #5a4fd6;
+        }
 
-            .section {
-                display: none;
-            }
+        .section {
+        display: none;
+        }
 
-                .section.active {
-                    display: block;
-                }
+        .section.active {
+        display: block;
+        }
 
-            .dashboard {
-                background: white;
-                border-radius: 20px;
-                padding: 18px;
-                margin-bottom: 15px;
-                box-shadow: 0 10px 30px rgba(0,0,0,.15);
-            }
+        .dashboard {
+        background: white;
+        border-radius: 20px;
+        padding: 18px;
+        margin-bottom: 15px;
+        box-shadow: 0 10px 30px rgba(0,0,0,.15);
+        }
 
-                .dashboard h2 {
-                    color: #5a4fd6;
-                    margin-bottom: 15px;
-                }
+        .dashboard h2 {
+        color: #5a4fd6;
+        margin-bottom: 15px;
+        }
 
-            .dashboard-grid {
-                display: grid;
-                grid-template-columns: repeat(2,1fr);
-                gap: 10px;
-            }
+        .dashboard-grid {
+        display: grid;
+        grid-template-columns: repeat(2,1fr);
+        gap: 10px;
+        }
 
-            .dashboard-box {
-                background: #f4f4ff;
-                padding: 12px;
-                border-radius: 12px;
-                text-align: center;
-            }
+        .dashboard-box {
+        background: #f4f4ff;
+        padding: 12px;
+        border-radius: 12px;
+        text-align: center;
+        }
 
-                .dashboard-box span {
-                    display: block;
-                    font-size: 12px;
-                    color: #666;
-                }
+        .dashboard-box span {
+        display: block;
+        font-size: 12px;
+        color: #666;
+        }
 
-                .dashboard-box strong {
-                    font-size: 18px;
-                    color: #5a4fd6;
-                }
+        .dashboard-box strong {
+        font-size: 18px;
+        color: #5a4fd6;
+        }
 
-            .summary-card {
-                background: white;
-                border-radius: 20px;
-                padding: 15px;
-                margin-bottom: 15px;
-            }
+        .summary-card {
+        background: white;
+        border-radius: 20px;
+        padding: 15px;
+        margin-bottom: 15px;
+        }
 
-                .summary-card h3 {
-                    color: #5a4fd6;
-                    margin-bottom: 10px;
-                }
+        .summary-card h3 {
+        color: #5a4fd6;
+        margin-bottom: 10px;
+        }
 
-            .add-btn {
-                width: 100%;
-                border: none;
-                padding: 14px;
-                border-radius: 15px;
-                background: #00c853;
-                color: white;
-                font-size: 16px;
-                font-weight: 700;
-                margin-bottom: 15px;
-                cursor: pointer;
-            }
+        .add-btn {
+        width: 100%;
+        border: none;
+        padding: 14px;
+        border-radius: 15px;
+        background: #00c853;
+        color: white;
+        font-size: 16px;
+        font-weight: 700;
+        margin-bottom: 15px;
+        cursor: pointer;
+        }
 
-            .card {
-                background: rgba(255,255,255,.15);
-                backdrop-filter: blur(15px);
-                border-radius: 20px;
-                padding: 18px;
-                margin-bottom: 15px;
-                border: 1px solid rgba(255,255,255,.2);
-                color: white;
-            }
+        .card {
+        background: rgba(255,255,255,.15);
+        backdrop-filter: blur(15px);
+        border-radius: 20px;
+        padding: 18px;
+        margin-bottom: 15px;
+        border: 1px solid rgba(255,255,255,.2);
+        color: white;
+        }
 
-            .mock-title {
-                font-size: 18px;
-                font-weight: 700;
-                margin-bottom: 15px;
-            }
+        .mock-title {
+        font-size: 18px;
+        font-weight: 700;
+        margin-bottom: 15px;
+        }
 
-            .grid {
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-                gap: 10px;
-            }
+        .grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        }
 
-            label {
-                display: block;
-                margin-bottom: 5px;
-                font-size: 13px;
-            }
+        label {
+        display: block;
+        margin-bottom: 5px;
+        font-size: 13px;
+        }
 
-            input {
-                width: 100%;
-                padding: 10px;
-                border: none;
-                border-radius: 10px;
-            }
+        input {
+        width: 100%;
+        padding: 10px;
+        border: none;
+        border-radius: 10px;
+        }
 
-            .stats {
-                margin-top: 15px;
-                display: grid;
-                grid-template-columns: repeat(4,1fr);
-                gap: 8px;
-            }
+        .stats {
+        margin-top: 15px;
+        display: grid;
+        grid-template-columns: repeat(4,1fr);
+        gap: 8px;
+        }
 
-            .stat {
-                background: rgba(255,255,255,.15);
-                padding: 10px;
-                border-radius: 10px;
-                text-align: center;
-            }
+        .stat {
+        background: rgba(255,255,255,.15);
+        padding: 10px;
+        border-radius: 10px;
+        text-align: center;
+        }
 
-                .stat span {
-                    display: block;
-                    font-size: 12px;
-                }
+        .stat span {
+        display: block;
+        font-size: 12px;
+        }
 
-                .stat strong {
-                    font-size: 16px;
-                }
+        .stat strong {
+        font-size: 16px;
+        }
 
-            .btn-row {
-                display: flex;
-                gap: 10px;
-                margin-top: 15px;
-            }
+        .btn-row {
+        display: flex;
+        gap: 10px;
+        margin-top: 15px;
+        }
 
-            .lock-btn {
-                flex: 1;
-                border: none;
-                padding: 10px;
-                border-radius: 10px;
-                background: #ff9800;
-                color: white;
-                font-weight: bold;
-                cursor: pointer;
-            }
+        .lock-btn {
+        flex: 1;
+        border: none;
+        padding: 10px;
+        border-radius: 10px;
+        background: #ff9800;
+        color: white;
+        font-weight: bold;
+        cursor: pointer;
+        }
 
-            .delete-btn {
-                flex: 1;
-                border: none;
-                padding: 10px;
-                border-radius: 10px;
-                background: #e53935;
-                color: white;
-                font-weight: bold;
-                cursor: pointer;
-            }
+        .delete-btn {
+        flex: 1;
+        border: none;
+        padding: 10px;
+        border-radius: 10px;
+        background: #e53935;
+        color: white;
+        font-weight: bold;
+        cursor: pointer;
+        }
 
-            .reset-btn {
-                width: 100%;
-                margin-top: 10px;
-                border: none;
-                padding: 12px;
-                border-radius: 12px;
-                background: #e53935;
-                color: white;
-                font-weight: bold;
-                cursor: pointer;
-            }
+        .reset-btn {
+        width: 100%;
+        margin-top: 10px;
+        border: none;
+        padding: 12px;
+        border-radius: 12px;
+        background: #e53935;
+        color: white;
+        font-weight: bold;
+        cursor: pointer;
+        }
 
     </style>
 </head>
@@ -233,23 +233,23 @@
         <div class="dashboard-grid">
 
             <div class="dashboard-box">
-                <span>Maths</span>
-                <strong id="cmpMaths">0</strong>
-            </div>
-
-            <div class="dashboard-box">
                 <span>Reasoning</span>
                 <strong id="cmpReasoning">0</strong>
             </div>
 
             <div class="dashboard-box">
-                <span>English</span>
-                <strong id="cmpEnglish">0</strong>
+                <span>GS</span>
+                <strong id="cmpGS">0</strong>
             </div>
 
             <div class="dashboard-box">
-                <span>GS</span>
-                <strong id="cmpGS">0</strong>
+                <span>Maths</span>
+                <strong id="cmpMaths">0</strong>
+            </div>
+
+            <div class="dashboard-box">
+                <span>English</span>
+                <strong id="cmpEnglish">0</strong>
             </div>
 
             <div class="dashboard-box">
@@ -279,21 +279,23 @@
 
     <div class="tabs">
 
-        <button class="tab-btn active" onclick="showSection('maths',this)">
-            Maths
-        </button>
-
         <button class="tab-btn" onclick="showSection('reasoning',this)">
             Reasoning
+        </button>
+
+        <button class="tab-btn" onclick="showSection('gs',this)">
+            GS
+        </button>
+
+        <button class="tab-btn active" onclick="showSection('maths',this)">
+            Maths
         </button>
 
         <button class="tab-btn" onclick="showSection('english',this)">
             English
         </button>
 
-        <button class="tab-btn" onclick="showSection('gs',this)">
-            GS
-        </button>
+
 
     </div>
 
@@ -304,549 +306,625 @@
 
     <script>
 
-            const sections = ["maths","reasoning","english","gs"];
+        const sections = ["maths","reasoning","english","gs"];
 
-            sections.forEach(sec=>{
+        sections.forEach(sec=>{
 
-            document.getElementById(sec).innerHTML=`
+        document.getElementById(sec).innerHTML=`
 
-            <div class="summary-card">
+        <div class="summary-card">
 
-            <h3>${sec.toUpperCase()} Average</h3>
+        <h3>${sec.toUpperCase()} Average</h3>
 
-            <div>
-            Mocks :
-            <span class="avgMocks">0</span>
-            </div>
+        <div>
+        Mocks :
+        <span class="avgMocks">0</span>
+        </div>
 
-            <div>
-            Avg Score :
-            <span class="avgScore">0</span>
-            </div>
+        <div>
+        Avg Score :
+        <span class="avgScore">0</span>
+        </div>
 
-            <div>
-            Accuracy :
-            <span class="avgAccuracy">0%</span>
-            </div>
+        <div>
+        Accuracy :
+        <span class="avgAccuracy">0%</span>
+        </div>
 
-            </div>
+        </div>
 
-            <button class="add-btn"
-            onclick="addMock('${sec}')">
+        <button class="add-btn"
+        onclick="addMock('${sec}')">
 
-            + Add Mock
+        + Add Mock
 
-            </button>
+        </button>
 
-            <div id="${sec}Container"></div>
+        <div id="${sec}Container"></div>
 
-            `;
+        `;
 
-            });
+        });
 
-            function showSection(id,btn){
+        function showSection(id,btn){
 
-            document.querySelectorAll('.section')
-            .forEach(x=>x.classList.remove('active'));
+        document.querySelectorAll('.section')
+        .forEach(x=>x.classList.remove('active'));
 
-            document.querySelectorAll('.tab-btn')
-            .forEach(x=>x.classList.remove('active'));
+        document.querySelectorAll('.tab-btn')
+        .forEach(x=>x.classList.remove('active'));
 
-            document.getElementById(id)
-            .classList.add('active');
+        document.getElementById(id)
+        .classList.add('active');
 
-            btn.classList.add('active');
+        btn.classList.add('active');
 
-            }
+        }
 
-            function addMock(section,data=null){
+        function addMock(section,data=null){
 
-            const container=
-            document.getElementById(section+'Container');
+        const container=
+        document.getElementById(section+'Container');
 
-            const card=
-            document.createElement('div');
+        const card=
+        document.createElement('div');
 
-            card.className='card';
+        card.className='card';
 
-            card.innerHTML=`
+        card.innerHTML=`
 
-            <div class="mock-title">
-            Mock
-            </div>
+        <div class="mock-title">
+        Mock
+        </div>
 
-            <div class="grid">
+        <div class="grid">
 
-            <div>
-            <label>Total Questions</label>
-            <input class="total"
-            type="number"
-            value="25">
-            </div>
+        <div>
+        <label>Total Questions</label>
+        <input class="total"
+        type="number"
+        value="25">
+        </div>
 
-            <div>
-            <label>Attempted</label>
-            <input class="attempted"
-            type="number"
-            value="${data?.attempted || ''}">
-            </div>
+        <div>
+        <label>Attempted</label>
+        <input class="attempted"
+        type="number"
+        value="${data?.attempted || ''}">
+        </div>
 
-            <div>
-            <label>Correct</label>
-            <input class="correct"
-            type="number"
-            value="${data?.correct || ''}">
-            </div>
+        <div>
+        <label>Correct</label>
+        <input class="correct"
+        type="number"
+        value="${data?.correct || ''}">
+        </div>
 
-            </div>
+        </div>
 
-            <div class="stats">
+        <div class="stats">
 
-            <div class="stat">
-            <span>Wrong</span>
-            <strong class="wrong">0</strong>
-            </div>
+        <div class="stat">
+        <span>Wrong</span>
+        <strong class="wrong">0</strong>
+        </div>
 
-            <div class="stat">
-            <span>Unattempted</span>
-            <strong class="unattempted">0</strong>
-            </div>
+        <div class="stat">
+        <span>Unattempted</span>
+        <strong class="unattempted">0</strong>
+        </div>
 
-            <div class="stat">
-            <span>Score</span>
-            <strong class="score">0</strong>
-            </div>
+        <div class="stat">
+        <span>Score</span>
+        <strong class="score">0</strong>
+        </div>
 
-            <div class="stat">
-            <span>Accuracy</span>
-            <strong class="accuracy">0%</strong>
-            </div>
+        <div class="stat">
+        <span>Accuracy</span>
+        <strong class="accuracy">0%</strong>
+        </div>
 
-            </div>
+        </div>
 
-            <div class="btn-row">
+        <div class="btn-row">
 
-            </div>
+        </div>
 
-            `;
+        `;
 
-            container.prepend(card);
+        container.prepend(card);
 
-            card.querySelectorAll("input")
-            .forEach(i=>{
+        card.querySelectorAll("input")
+        .forEach(i=>{
 
-            i.addEventListener("input",()=>{
+        i.addEventListener("input",()=>{
 
-            calculate(card);
-            saveData();
-            refreshAll();
+        calculate(card);
+        saveData();
+        refreshAll();
 
-            });
+        });
 
-            });
+        });
 
-            calculate(card);
+        calculate(card);
 
-            renumber(container);
+        renumber(container);
 
-            saveData();
+        saveData();
 
-            refreshAll();
+        refreshAll();
 
-            }
+        }
 
-            function calculate(card){
+        function calculate(card){
 
-            let total=
-            parseInt(card.querySelector(".total").value)||0;
+        let total=
+        parseInt(card.querySelector(".total").value)||0;
 
-            let attempted=
-            parseInt(card.querySelector(".attempted").value)||0;
+        let attempted=
+        parseInt(card.querySelector(".attempted").value)||0;
 
-            let correct=
-            parseInt(card.querySelector(".correct").value)||0;
+        let correct=
+        parseInt(card.querySelector(".correct").value)||0;
 
-            let wrong=
-            attempted-correct;
+        let wrong=
+        attempted-correct;
 
-            if(wrong<0)
-            wrong=0;
+        if(wrong<0)
+        wrong=0;
 
-            let unattempted=
-            total-attempted;
+        let unattempted=
+        total-attempted;
 
-            let score=
-            (correct*2) - (wrong*0.5);
+        let score=
+        (correct*2) - (wrong*0.5);
 
-            let accuracy=
-            attempted>0
-            ?((correct/attempted)*100).toFixed(2)
-            :0;
+        let accuracy=
+        attempted>0
+        ?((correct/attempted)*100).toFixed(2)
+        :0;
 
-            card.querySelector(".wrong").innerText=wrong;
-            card.querySelector(".unattempted").innerText=unattempted;
-            card.querySelector(".score").innerText=score.toFixed(2);
-            card.querySelector(".accuracy").innerText=accuracy+"%";
+        card.querySelector(".wrong").innerText=wrong;
+        card.querySelector(".unattempted").innerText=unattempted;
+        card.querySelector(".score").innerText=score.toFixed(2);
+        card.querySelector(".accuracy").innerText=accuracy+"%";
 
-            }
+        }
 
-            function toggleLock(btn){
+        function toggleLock(btn){
 
-            let card=
-            btn.closest(".card");
+        let card=
+        btn.closest(".card");
 
-            let inputs=
-            card.querySelectorAll("input");
+        let inputs=
+        card.querySelectorAll("input");
 
-            let locked=
-            btn.dataset.locked==="true";
+        let locked=
+        btn.dataset.locked==="true";
 
-            inputs.forEach(i=>{
+        inputs.forEach(i=>{
 
-            i.disabled=!locked;
+        i.disabled=!locked;
 
-            });
+        });
 
-            btn.dataset.locked=!locked;
+        btn.dataset.locked=!locked;
 
-            btn.innerText=
-            locked
-            ?"🔒 Lock"
-            :"🔓 Unlock";
+        btn.innerText=
+        locked
+        ?"🔒 Lock"
+        :"🔓 Unlock";
 
-            saveData();
+        saveData();
 
-            }
+        }
 
-            function deleteMock(btn){
+        function deleteMock(btn){
 
-            let container=
-            btn.closest('[id$="Container"]');
+        let container=
+        btn.closest('[id$="Container"]');
 
-            btn.closest(".card").remove();
+        btn.closest(".card").remove();
 
-            renumber(container);
+        renumber(container);
 
-            saveData();
+        saveData();
 
-            refreshAll();
+        refreshAll();
 
-            }
+        }
 
-            function renumber(container){
+        function renumber(container){
 
-            let cards=
-            container.querySelectorAll(".card");
+        let cards=
+        container.querySelectorAll(".card");
 
-            cards.forEach((card,index)=>{
+        cards.forEach((card,index)=>{
 
-            card.querySelector(".mock-title")
-            .innerText=
-            "Mock " +
-            (cards.length-index);
+        card.querySelector(".mock-title")
+        .innerText=
+        "Mock " +
+        (cards.length-index);
 
-            });
+        });
 
-            }
+        }
 
-            function refreshAll(){
+        function refreshAll(){
 
-            let totalMocks=0;
-            let totalScore=0;
-            let bestScore=0;
+        let totalMocks=0;
+        let totalScore=0;
+        let bestScore=0;
 
-            let totalCorrect=0;
-            let totalAttempted=0;
+        let totalCorrect=0;
+        let totalAttempted=0;
 
-            sections.forEach(sec=>{
+        sections.forEach(sec=>{
 
-            let container=
-            document.getElementById(sec+'Container');
+        let container=
+        document.getElementById(sec+'Container');
 
-            let cards=
-            container.querySelectorAll('.card');
+        let cards=
+        container.querySelectorAll('.card');
 
-            let sectionScore=0;
+        let sectionScore=0;
 
-            cards.forEach(card=>{
+        cards.forEach(card=>{
 
-            totalMocks++;
+        totalMocks++;
 
-            let score=
-            parseFloat(
-            card.querySelector('.score').innerText
-            )||0;
+        let score=
+        parseFloat(
+        card.querySelector('.score').innerText
+        )||0;
 
-            sectionScore+=score;
+        sectionScore+=score;
 
-            totalScore+=score;
+        totalScore+=score;
 
-            if(score>bestScore)
-            bestScore=score;
+        if(score>bestScore)
+        bestScore=score;
 
-            totalCorrect+=
-            parseInt(
-            card.querySelector('.correct').value
-            )||0;
+        totalCorrect+=
+        parseInt(
+        card.querySelector('.correct').value
+        )||0;
 
-            totalAttempted+=
-            parseInt(
-            card.querySelector('.attempted').value
-            )||0;
+        totalAttempted+=
+        parseInt(
+        card.querySelector('.attempted').value
+        )||0;
 
-            });
+        });
 
-            let avgScore=
-            cards.length
-            ?(sectionScore/cards.length).toFixed(2)
-            :0;
+        let avgScore=
+        cards.length
+        ?(sectionScore/cards.length).toFixed(2)
+        :0;
 
-            let acc=
-            0;
+        let acc=
+        0;
 
-            cards.forEach(card=>{
+        cards.forEach(card=>{
 
-            acc+=parseFloat(
-            card.querySelector('.accuracy')
-            .innerText
-            )||0;
+        acc+=parseFloat(
+        card.querySelector('.accuracy')
+        .innerText
+        )||0;
 
-            });
+        });
 
-            acc=
-            cards.length
-            ?(acc/cards.length).toFixed(2)
-            :0;
+        acc=
+        cards.length
+        ?(acc/cards.length).toFixed(2)
+        :0;
 
-            let summary=
-            document
-            .getElementById(sec)
-            .querySelector('.summary-card');
+        let summary=
+        document
+        .getElementById(sec)
+        .querySelector('.summary-card');
 
-            summary.querySelector('.avgMocks')
-            .innerText=cards.length;
+        summary.querySelector('.avgMocks')
+        .innerText=cards.length;
 
-            summary.querySelector('.avgScore')
-            .innerText=avgScore;
+        summary.querySelector('.avgScore')
+        .innerText=avgScore;
 
-            summary.querySelector('.avgAccuracy')
-            .innerText=acc+'%';
+        summary.querySelector('.avgAccuracy')
+        .innerText=acc+'%';
 
-            });
+        });
 
-            let overallAccuracy=
-            totalAttempted
-            ?((totalCorrect/totalAttempted)*100).toFixed(2)
-            :0;
+        let overallAccuracy=
+        totalAttempted
+        ?((totalCorrect/totalAttempted)*100).toFixed(2)
+        :0;
 
-                        const totalMocksEl =
-            document.getElementById("totalMocks");
+        const totalMocksEl =
+        document.getElementById("totalMocks");
 
-            const totalScoreEl =
-            document.getElementById("totalScore");
+        const totalScoreEl =
+        document.getElementById("totalScore");
 
-            const bestScoreEl =
-            document.getElementById("bestScore");
+        const bestScoreEl =
+        document.getElementById("bestScore");
 
-            const overallAccuracyEl =
-            document.getElementById("overallAccuracy");
+        const overallAccuracyEl =
+        document.getElementById("overallAccuracy");
 
-            if(totalMocksEl)
-            totalMocksEl.innerText=totalMocks;
+        if(totalMocksEl)
+        totalMocksEl.innerText=totalMocks;
 
-            if(totalScoreEl)
-            totalScoreEl.innerText=
-            totalScore.toFixed(2);
+        if(totalScoreEl)
+        totalScoreEl.innerText=
+        totalScore.toFixed(2);
 
-            if(bestScoreEl)
-            bestScoreEl.innerText=
-            bestScore.toFixed(2);
+        if(bestScoreEl)
+        bestScoreEl.innerText=
+        bestScore.toFixed(2);
 
-            if(overallAccuracyEl)
-            overallAccuracyEl.innerText=
-            overallAccuracy+"%";
+        if(overallAccuracyEl)
+        overallAccuracyEl.innerText=
+        overallAccuracy+"%";
 
-                        fillMockDropdown();
-            updateMockComparison();
+        fillMockDropdown();
+        updateMockComparison();
 
-            }
+        }
 
-            function saveData(){
+        function saveData(){
 
-            let data={};
+        let data={};
 
-            sections.forEach(sec=>{
+        sections.forEach(sec=>{
 
-            data[sec]=[];
+        data[sec]=[];
 
-            document
-            .querySelectorAll('#'+sec+'Container .card')
-            .forEach(card=>{
+        document
+        .querySelectorAll('#'+sec+'Container .card')
+        .forEach(card=>{
 
-            data[sec].push({
+        data[sec].push({
 
-            total:
-            card.querySelector('.total').value,
+        total:
+        card.querySelector('.total').value,
 
-            attempted:
-            card.querySelector('.attempted').value,
+        attempted:
+        card.querySelector('.attempted').value,
 
-            correct:
-            card.querySelector('.correct').value
+        correct:
+        card.querySelector('.correct').value
 
-            });
+        });
 
-            });
+        });
 
-            });
+        });
 
-            localStorage.setItem(
-            "sscMockTracker",
-            JSON.stringify(data)
-            );
+        localStorage.setItem(
+        "sscMockTracker",
+        JSON.stringify(data)
+        );
 
-            }
+        }
 
-                                    function fillMockDropdown(){
+        function fillMockDropdown(){
 
-                const ddl =
-                document.getElementById('mockSelector');
+        const ddl =
+        document.getElementById('mockSelector');
 
-                if(!ddl) return;
+        if(!ddl) return;
 
-                let maxMocks = 0;
+        let maxMocks = 0;
 
-                sections.forEach(sec=>{
+        sections.forEach(sec=>{
 
-                    const count =
-                    document.querySelectorAll(
-                    '#' + sec + 'Container .card'
-                    ).length;
+        const count =
+        document.querySelectorAll(
+        '#' + sec + 'Container .card'
+        ).length;
 
-                    maxMocks = Math.max(maxMocks,count);
+        maxMocks = Math.max(maxMocks,count);
 
-                });
+        });
 
-                const currentValue = ddl.value;
+        const currentValue = ddl.value;
 
-                ddl.innerHTML = '';
+        ddl.innerHTML = '';
 
-                for(let i=maxMocks;i>=1;i--){
+        for(let i=maxMocks;i>=1;i--){
 
-                    ddl.innerHTML += `
-                        <option value="${i}">
-                            Mock ${i}
-                        </option>
-                    `;
-                }
+        ddl.innerHTML += `
+        <option value="${i}">
+        Mock ${i}
+        </option>
+        `;
+        }
 
-                if(currentValue &&
-                   ddl.querySelector(`option[value="${currentValue}"]`)){
+        if(currentValue &&
+        ddl.querySelector(`option[value="${currentValue}"]`)){
 
-                    ddl.value = currentValue;
-                }
+        ddl.value = currentValue;
+        }
 
-                else if(maxMocks>0){
+        else if(maxMocks>0){
 
-                    ddl.value=maxMocks;
-                }
-            }
+        ddl.value=maxMocks;
+        }
+        }
 
-                        function updateMockComparison(){
+        function updateMockComparison(){
 
-                const ddl =
-                document.getElementById('mockSelector');
+        const ddl =
+        document.getElementById('mockSelector');
 
-                if(!ddl || !ddl.value) return;
+        if(!ddl || !ddl.value) return;
 
-                const mockNo =
-                parseInt(ddl.value);
+        const mockNo =
+        parseInt(ddl.value);
 
-                let maths=0;
-                let reasoning=0;
-                let english=0;
-                let gs=0;
+        let maths=0;
+        let reasoning=0;
+        let english=0;
+        let gs=0;
 
-                let totalCorrect=0;
-                let totalAttempted=0;
+        let totalCorrect=0;
+        let totalAttempted=0;
 
-                sections.forEach(sec=>{
+        sections.forEach(sec=>{
 
-                    const cards =
-                    [...document.querySelectorAll(
-                    '#' + sec + 'Container .card'
-                    )];
+        const cards =
+        [...document.querySelectorAll(
+        '#' + sec + 'Container .card'
+        )];
 
-                    const card =
-                    cards.find(c=>
-                        c.querySelector('.mock-title')
-                        .innerText.trim() === `Mock ${mockNo}`
-                    );
+        const card =
+        cards.find(c=>
+        c.querySelector('.mock-title')
+        .innerText.trim() === `Mock ${mockNo}`
+        );
 
-                    if(!card) return;
+        if(!card) return;
 
-                    const score =
-                    parseFloat(
-                    card.querySelector('.score').innerText
-                    ) || 0;
+        const score =
+        parseFloat(
+        card.querySelector('.score').innerText
+        ) || 0;
 
-                    const correct =
-                    parseInt(
-                    card.querySelector('.correct').value
-                    ) || 0;
+        const correct =
+        parseInt(
+        card.querySelector('.correct').value
+        ) || 0;
 
-                    const attempted =
-                    parseInt(
-                    card.querySelector('.attempted').value
-                    ) || 0;
+        const attempted =
+        parseInt(
+        card.querySelector('.attempted').value
+        ) || 0;
 
-                    totalCorrect += correct;
-                    totalAttempted += attempted;
+        totalCorrect += correct;
+        totalAttempted += attempted;
 
-                    if(sec==="maths") maths=score;
-                    if(sec==="reasoning") reasoning=score;
-                    if(sec==="english") english=score;
-                    if(sec==="gs") gs=score;
+        if(sec==="maths") maths=score;
+        if(sec==="reasoning") reasoning=score;
+        if(sec==="english") english=score;
+        if(sec==="gs") gs=score;
 
-                });
+        });
 
-                document.getElementById("cmpMaths").innerText =
-                maths.toFixed(2);
+        document.getElementById("cmpMaths").innerText =
+        maths.toFixed(2);
 
-                document.getElementById("cmpReasoning").innerText =
-                reasoning.toFixed(2);
+        document.getElementById("cmpReasoning").innerText =
+        reasoning.toFixed(2);
 
-                document.getElementById("cmpEnglish").innerText =
-                english.toFixed(2);
+        document.getElementById("cmpEnglish").innerText =
+        english.toFixed(2);
 
-                document.getElementById("cmpGS").innerText =
-                gs.toFixed(2);
+        document.getElementById("cmpGS").innerText =
+        gs.toFixed(2);
 
-                const total =
-                maths + reasoning + english + gs;
+        const total =
+        maths + reasoning + english + gs;
 
-                document.getElementById("cmpTotal").innerText =
-                total.toFixed(2) + " / 200";
+        document.getElementById("cmpTotal").innerText =
+        total.toFixed(2) + " / 200";
 
-                const accuracy =
-                totalAttempted
-                ? ((totalCorrect/totalAttempted)*100).toFixed(2)
-                : 0;
+        const accuracy =
+        totalAttempted
+        ? ((totalCorrect/totalAttempted)*100).toFixed(2)
+        : 0;
 
-                document.getElementById("cmpAccuracy").innerText =
-                accuracy + "%";
-            }
+        document.getElementById("cmpAccuracy").innerText =
+        accuracy + "%";
+        }
 
         function drawHeader(doc,title){
 
-        doc.setFillColor(90,79,214);
-        doc.rect(0,0,210,15,'F');
+        // Top Banner
+        doc.setFillColor(
+        90,
+        79,
+        214
+        );
 
-        doc.setTextColor(255,255,255);
-        doc.setFontSize(18);
-        doc.text(title,14,10);
+        doc.rect(
+        0,
+        0,
+        210,
+        16,
+        'F'
+        );
 
-        doc.setTextColor(0,0,0);
+        // Main Title
+        doc.setFont(
+        "helvetica",
+        "bold"
+        );
+
+        doc.setFontSize(14);
+
+        doc.setTextColor(
+        255,
+        255,
+        255
+        );
+
+        doc.text(
+        title,
+        14,
+        10
+        );
+
+        // Generated Time
+        doc.setFont(
+        "helvetica",
+        "normal"
+        );
+
+        doc.setFontSize(7);
+
+        const currentDate =
+        new Date().toLocaleString();
+
+        const dateWidth =
+        doc.getTextWidth(
+        currentDate
+        );
+
+        doc.text(
+        currentDate,
+        200 - dateWidth,
+        10
+        );
+
+        // Thin Separator Line
+        doc.setDrawColor(
+        200,
+        200,
+        200
+        );
+
+        doc.line(
+        10,
+        20,
+        200,
+        20
+        );
+
+        // Reset Defaults
+        doc.setTextColor(
+        0,
+        0,
+        0
+        );
+
+        doc.setFontSize(9);
+
+        doc.setFont(
+        "helvetica",
+        "normal"
+        );
         }
 
         function drawFooter(doc){
@@ -854,11 +932,39 @@
         const pageCount =
         doc.internal.getNumberOfPages();
 
-        for(let i=1;i<=pageCount;i++){
+        for(
+        let i=1;
+        i<=pageCount;
+        i++
+        ){
 
         doc.setPage(i);
 
-        doc.setFontSize(9);
+        doc.setDrawColor(
+        220,
+        220,
+        220
+        );
+
+        doc.line(
+        10,
+        285,
+        200,
+        285
+        );
+
+        doc.setFont(
+        "helvetica",
+        "normal"
+        );
+
+        doc.setFontSize(8);
+
+        doc.setTextColor(
+        100,
+        100,
+        100
+        );
 
         doc.text(
         `Page ${i} of ${pageCount}`,
@@ -867,11 +973,17 @@
         );
 
         doc.text(
-        new Date().toLocaleString(),
+        "SSC Mock Tracker",
         14,
         290
         );
         }
+
+        doc.setTextColor(
+        0,
+        0,
+        0
+        );
         }
 
         function drawTable(
@@ -879,77 +991,117 @@
         x,
         y,
         headers,
-        rows
+        rows,
+        pageTitle = "SSC MOCK TRACKER REPORT"
         ){
 
-        const colWidth =
-        180 / headers.length;
+        const widths = [
+        26, // Mock
+        26, // Total
+        28, // Attempted
+        26, // Correct
+        26, // Wrong
+        26, // Score
+        32  // Accuracy
+        ];
 
-        doc.setFontSize(10);
+        let currentY = y;
+
+        function drawTableHeader(){
+
+        doc.setFont("helvetica","bold");
+        doc.setFontSize(9);
+
+        let runningX = x;
+
+        headers.forEach((header,index)=>{
 
         doc.setFillColor(235,235,255);
 
         doc.rect(
-        x,
-        y,
-        180,
-        8,
+        runningX,
+        currentY,
+        widths[index],
+        10,
         'F'
         );
 
-        doc.setLineDashPattern([1,1],0);
-
         doc.rect(
-        x,
-        y,
-        180,
-        8
+        runningX,
+        currentY,
+        widths[index],
+        10
         );
 
-        headers.forEach((h,index)=>{
+        let textWidth =
+        doc.getTextWidth(header);
 
         doc.text(
-        String(h),
-        x + (index*colWidth) + 2,
-        y + 5
+        header,
+        runningX +
+        (widths[index]-textWidth)/2,
+        currentY + 6
         );
 
-        if(index>0){
+        runningX += widths[index];
 
-        doc.line(
-        x + (index*colWidth),
-        y,
-        x + (index*colWidth),
-        y+8
-        );
-        }
         });
 
-        let currentY = y + 8;
+        currentY += 10;
+        }
 
-        rows.forEach(row=>{
+        drawTableHeader();
 
-        doc.rect(
-        x,
-        currentY,
-        180,
-        8
+        doc.setFont(
+        "helvetica",
+        "normal"
         );
+
+        doc.setFontSize(9);
+
+        for(const row of rows){
+
+        if(currentY > 250){
+
+        doc.addPage();
+
+        drawHeader(
+        doc,
+        pageTitle
+        );
+
+        currentY = 25;
+
+        drawTableHeader();
+
+        doc.setFont(
+        "helvetica",
+        "normal"
+        );
+
+        doc.setFontSize(9);
+        }
+
+        let runningX = x;
 
         row.forEach((cell,index)=>{
 
         const value =
         String(cell);
 
-        const cellX =
-        x + (index*colWidth);
-
-        const header =
+        const currentHeader =
         headers[index];
 
+        doc.rect(
+        runningX,
+        currentY,
+        widths[index],
+        8
+        );
+
         if(
-        header === "Score" ||
-        header === "Avg Score"
+        currentHeader === "Score" ||
+        currentHeader === "Avg Score"
         ){
 
         const score =
@@ -966,11 +1118,18 @@
         );
 
         doc.rect(
-        cellX,
+        runningX,
         currentY,
-        colWidth,
+        widths[index],
         8,
         'F'
+        );
+
+        doc.rect(
+        runningX,
+        currentY,
+        widths[index],
+        8
         );
 
         doc.setTextColor(
@@ -978,7 +1137,6 @@
         0,
         0
         );
-
         }
         else{
 
@@ -989,11 +1147,18 @@
         );
 
         doc.rect(
-        cellX,
+        runningX,
         currentY,
-        colWidth,
+        widths[index],
         8,
         'F'
+        );
+
+        doc.rect(
+        runningX,
+        currentY,
+        widths[index],
+        8
         );
 
         doc.setTextColor(
@@ -1007,7 +1172,7 @@
 
         doc.text(
         value,
-        cellX + 2,
+        runningX + 2,
         currentY + 5
         );
 
@@ -1017,23 +1182,13 @@
         0
         );
 
-        if(index>0){
-
-        doc.line(
-        cellX,
-        currentY,
-        cellX,
-        currentY+8
-        );
-        }
+        runningX +=
+        widths[index];
 
         });
 
         currentY += 8;
-
-        });
-
-        doc.setLineDashPattern([],0);
+        }
 
         return currentY;
         }
@@ -1386,45 +1541,45 @@
         );
         }
 
-            function loadData(){
+        function loadData(){
 
-            let data=
-            JSON.parse(
-            localStorage.getItem(
-            "sscMockTracker"
-            )||"{}");
+        let data=
+        JSON.parse(
+        localStorage.getItem(
+        "sscMockTracker"
+        )||"{}");
 
-            sections.forEach(sec=>{
+        sections.forEach(sec=>{
 
-            (data[sec]||[])
-            .reverse()
-            .forEach(mock=>{
+        (data[sec]||[])
+        .reverse()
+        .forEach(mock=>{
 
-            addMock(sec,mock);
+        addMock(sec,mock);
 
-            });
+        });
 
-            });
+        });
 
-            fillMockDropdown();
+        fillMockDropdown();
 
-            }
+        }
 
-            function resetData(){
+        function resetData(){
 
-            if(confirm("Delete all data?")){
+        if(confirm("Delete all data?")){
 
-            localStorage.removeItem(
-            "sscMockTracker"
-            );
+        localStorage.removeItem(
+        "sscMockTracker"
+        );
 
-            location.reload();
+        location.reload();
 
-            }
+        }
 
-            }
+        }
 
-            loadData();
+        loadData();
 
     </script>
 
